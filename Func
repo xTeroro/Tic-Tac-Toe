@@ -1,0 +1,20 @@
+#ifndef FuncH
+#define FuncH
+
+#include<string>
+
+
+namespace Func{
+    bool AskChar(char y, char n,std::string msg, std::string error);
+    int Ask3Char(char option_1, char option_2, char r, std::string msg, std::string error);
+    char CharSelect(char y, char n, std::string msg, std::string error);
+    void ClearMap(int m[3][3]);
+    void ResetDrawMap(char m[3][3]);
+    int CheckCord(int Max, std::string msg, std::string error);
+    bool CheckMap(int m[3][3],int cord1,int cord2);
+    int Random(int max);
+    bool CheckForEndMap(int m[3][3]);
+    bool CheckWin(int m[3][3], char P, char O);
+};
+
+#endif
