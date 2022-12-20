@@ -6,15 +6,15 @@
 
 using namespace std;
 
-//Question Functions
+// Question Functions
 bool Func::AskChar(char y, char n, string msg, string error)
 {
     string input;
     while (true)
     {
         cout << msg << '\n';
-        getline(cin,input);
-        cout<<'\n';
+        getline(cin, input);
+        cout << '\n';
         if ((input[0] == y || input[0] == y + 32) && input[1] == '\0')
         {
             return true;
@@ -35,8 +35,12 @@ int Func::Ask3Char(char option_1, char option_2, char r, string msg, string erro
     while (true)
     {
         cout << msg << '\n';
-        getline(cin,input);
-        cout<<'\n';
+        getline(cin, input);
+        if(input == "Creator?")
+        {
+            cout << "Teroro";
+        }
+        cout << '\n';
         if ((input[0] == option_1 || input[0] == option_1 + 32) && input[1] == '\0')
         {
             return 1;
@@ -45,7 +49,7 @@ int Func::Ask3Char(char option_1, char option_2, char r, string msg, string erro
         {
             return 2;
         }
-        else if((input[0] == r || input[0] == r + 32) && input[1] == '\0')
+        else if ((input[0] == r || input[0] == r + 32) && input[1] == '\0')
         {
             return 3;
         }
@@ -56,12 +60,12 @@ int Func::Ask3Char(char option_1, char option_2, char r, string msg, string erro
     }
 }
 
-//Resetting Maps Funtions
+// Resetting Maps Funtions
 void Func::ClearMap(int m[3][3])
 {
-    for(int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for(int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++)
         {
             m[i][j] = 0;
         }
@@ -69,61 +73,63 @@ void Func::ClearMap(int m[3][3])
 }
 void Func::ResetDrawMap(char m[3][3])
 {
-    for(int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for(int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++)
         {
             m[i][j] = '-';
         }
     }
 }
 
-//Input Check for Coordinates
+// Input Check for Coordinates
 int Func::CheckCord(int Max, string msg, string error)
 {
     string input;
     while (true)
     {
-        cout<<msg<<'\n';
-        getline(cin,input);
-        cout<<'\n';
-        if(input[0] >= '1' && input[0] <= Max+48 && input[1] == '\0')
+        cout << msg << '\n';
+        getline(cin, input);
+        cout << '\n';
+        if (input[0] >= '1' && input[0] <= Max + 48 && input[1] == '\0')
         {
-            return input[0]-49;
-        }else
+            return input[0] - 49;
+        }
+        else
         {
-            cout<<error<<'\n';
+            cout << error << '\n';
         }
     }
 }
 
-//Check Coordinates
-bool Func::CheckMap(int m[3][3],int cord1,int cord2)
+// Check Coordinates
+bool Func::CheckMap(int m[3][3], int cord1, int cord2)
 {
-    if(m[cord1][cord2] == 0)
+    if (m[cord1][cord2] == 0)
     {
         return true;
-    }else
+    }
+    else
     {
         return false;
     }
 }
 
-//AI
+// AI
 int Func::Random(int max)
 {
     srand(time(NULL));
     return rand() % max;
 }
 
-//Win Conditions
+// Win Conditions
 bool Func::CheckForEndMap(int m[3][3])
 {
-    for(int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for(int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++)
         {
-            if(m[i][j] == 0)
+            if (m[i][j] == 0)
             {
                 return false;
             }
@@ -134,50 +140,57 @@ bool Func::CheckForEndMap(int m[3][3])
 
 bool Func::CheckWin(int m[3][3], char P, char O)
 {
-    for(int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        if(m[i][0] == m[i][1] && m[i][1] == m[i][2] && m[i][0] != 0)
+        if (m[i][0] == m[i][1] && m[i][1] == m[i][2] && m[i][0] != 0)
         {
-            if(m[i][0] == 1)
+            if (m[i][0] == 1)
             {
-                cout<<P<<" Wins! (slabule)\n";
-                return true;
-            }else
-            {
-                cout<<O<<" Wins! (slabule)\n";
+                cout << P << " Wins! (slabule)\n";
                 return true;
             }
-        }else if(m[0][i] == m[1][i] && m[1][i] == m[2][i] && m[0][i] != 0)
-        {
-            if(m[0][i] == 1)
+            else
             {
-                cout<<P<<" Wins! (slabule)\n";
-                return true;
-            }else
-            {
-                cout<<O<<" Wins! (slabule)\n";
+                cout << O << " Wins! (slabule)\n";
                 return true;
             }
-        }else if(m[0][0] == m[1][1] && m[1][1] == m[2][2] && m[1][1] != 0)
+        }
+        else if (m[0][i] == m[1][i] && m[1][i] == m[2][i] && m[0][i] != 0)
         {
-            if(m[0][0] == 1)
+            if (m[0][i] == 1)
             {
-                cout<<P<<" Wins! (slabule)\n";
-                return true;
-            }else
-            {
-                cout<<O<<" Wins! (slabule)\n";
+                cout << P << " Wins! (slabule)\n";
                 return true;
             }
-        }else if(m[0][2] == m[1][1] && m[1][1] == m[2][0] && m[1][1] != 0)
-        {
-            if(m[0][2] == 1)
+            else
             {
-                cout<<P<<" Wins! (slabule)\n";
+                cout << O << " Wins! (slabule)\n";
                 return true;
-            }else
+            }
+        }
+        else if (m[0][0] == m[1][1] && m[1][1] == m[2][2] && m[1][1] != 0)
+        {
+            if (m[0][0] == 1)
             {
-                cout<<O<<" Wins! (slabule)\n";
+                cout << P << " Wins! (slabule)\n";
+                return true;
+            }
+            else
+            {
+                cout << O << " Wins! (slabule)\n";
+                return true;
+            }
+        }
+        else if (m[0][2] == m[1][1] && m[1][1] == m[2][0] && m[1][1] != 0)
+        {
+            if (m[0][2] == 1)
+            {
+                cout << P << " Wins! (slabule)\n";
+                return true;
+            }
+            else
+            {
+                cout << O << " Wins! (slabule)\n";
                 return true;
             }
         }
