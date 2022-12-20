@@ -197,7 +197,7 @@ void MultiPlayerGame()
             RowCord = CheckCord(3, "Enter the column coordinate (from left to right): ", "Invalid coordinate, please try again.");
             if (CheckMap(Map, ColumnCord, RowCord) == true)
             {
-                Map[ColumnCord][RowCord] = 1;
+                Map[ColumnCord][RowCord] = 2;
                 DrawMap[ColumnCord][RowCord] = Opponent;
                 break;
             }
