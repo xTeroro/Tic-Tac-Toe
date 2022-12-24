@@ -1,4 +1,4 @@
-#include "Func"
+#include "Liby"
 #include <iostream>
 #include <string>
 #include <random>
@@ -138,7 +138,7 @@ bool Func::CheckForEndMap(int m[3][3])
     return true;
 }
 
-bool Func::CheckWin(int m[3][3], char P, char O)
+char Func::CheckWin(int m[3][3], char P, char O)
 {
     for (int i = 0; i < 3; i++)
     {
@@ -146,52 +146,44 @@ bool Func::CheckWin(int m[3][3], char P, char O)
         {
             if (m[i][0] == 1)
             {
-                cout << P << " Wins! (slabule)\n";
-                return true;
+                return P;
             }
             else
             {
-                cout << O << " Wins! (slabule)\n";
-                return true;
+                return O;
             }
         }
         else if (m[0][i] == m[1][i] && m[1][i] == m[2][i] && m[0][i] != 0)
         {
             if (m[0][i] == 1)
             {
-                cout << P << " Wins! (slabule)\n";
-                return true;
+                return P;
             }
             else
             {
-                cout << O << " Wins! (slabule)\n";
-                return true;
+                return O;
             }
         }
         else if (m[0][0] == m[1][1] && m[1][1] == m[2][2] && m[1][1] != 0)
         {
             if (m[0][0] == 1)
             {
-                cout << P << " Wins! (slabule)\n";
-                return true;
+                return P;
             }
             else
             {
-                cout << O << " Wins! (slabule)\n";
-                return true;
+                return O;
             }
         }
         else if (m[0][2] == m[1][1] && m[1][1] == m[2][0] && m[1][1] != 0)
         {
             if (m[0][2] == 1)
             {
-                cout << P << " Wins! (slabule)\n";
-                return true;
+                return P;
             }
             else
             {
-                cout << O << " Wins! (slabule)\n";
-                return true;
+                return O;
             }
         }
     }
