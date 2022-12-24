@@ -1,11 +1,10 @@
 #include <iostream>
-#include "Liby"
+#include "Func"
 #include "windows.h"
 #include "unistd.h"
 
 using namespace std;
 using namespace Func;
-using namespace Bot;
 
 // Core Variables
 char Player, Opponent;
@@ -66,48 +65,8 @@ void SinglePlayerGame()
 {
     SetUp();
     Round = 0;
-    while (true)
+    if (Round == 0 && Player == '0')
     {
-        if (Round == 0 && Player == '0')
-        {
-            // Opponent Turn when Player is 0
-            Round++;
-            cout << "The Opponent Choosed: " << ColumnCord + 1 << " and " << RowCord + 1 << '\n';
-        }
-        Draw();
-        cout << '\n';
-        // Player Turn
-        while (true)
-        {
-            ColumnCord = CheckCord(3, "Enter the row coordinate (from up to down): ", "Invalid coordinate, please try again.");
-            RowCord = CheckCord(3, "Enter the column coordinate (from left to right): ", "Invalid coordinate, please try again.");
-            if (CheckMap(Map, ColumnCord, RowCord) == true)
-            {
-                Map[ColumnCord][RowCord] = 1;
-                DrawMap[ColumnCord][RowCord] = Player;
-                break;
-            }
-            else
-            {
-                cout << "T~his (but a scratch) coordinate is already taken, please try again \n"<< '\n';
-            }
-        }
-        // Check for Player Win
-        if (CheckWin(Map, Player, Opponent) == Player)
-        {
-            cout<<"Player Wins! (Slabule)";
-            Draw();
-            break;
-        }else if(CheckForEndMap(Map) == true)
-        {
-            cout << "Draw!" << '\n';
-            Draw();
-            cout << '\n';
-            break;
-        }
-        // AI Turn
-        BotTurn(Map, Player, Opponent, DrawMap);
-        /*
         for (int i = 0; i <= 9; i++)
         {
             BotCards[i] = i;
@@ -143,13 +102,87 @@ void SinglePlayerGame()
                 CardsCount--;
             }
         }
-        */
-        //cout << "The Opponent Choosed: " << ColumnCord + 1 << " and " << RowCord + 1 << '\n';
-        // Check for Opponent Win
-        if (CheckWin(Map,Player,Opponent) == Opponent)
+        cout << "The Opponent Choosed: " << ColumnCord + 1 << " and " << RowCord + 1 << '\n';
+        Round++;
+    }
+    while (true)
+    {
+        Draw();
+        cout << '\n';
+        // Player Turn
+        while (true)
         {
-            cout<<"Opponent Wins! (Slabule)";
+            ColumnCord = CheckCord(3, "Enter the row coordinate (from up to down): ", "Invalid coordinate, please try again.");
+            RowCord = CheckCord(3, "Enter the column coordinate (from left to right): ", "Invalid coordinate, please try again.");
+            if (CheckMap(Map, ColumnCord, RowCord) == true)
+            {
+                Map[ColumnCord][RowCord] = 1;
+                DrawMap[ColumnCord][RowCord] = Player;
+                break;
+            }
+            else
+            {
+                cout << "T~his (but a scratch) coordinate is already taken, please try again \n"
+                     << '\n';
+            }
+        }
+        // Check for Player Win
+        if (CheckWin(Map, Player, Opponent) == true)
+        {
             Draw();
+            cout << '\n';
+            break;
+        }
+        else if (CheckForEndMap(Map) == true)
+        {
+            cout << "Draw!" << '\n';
+            Draw();
+            cout << '\n';
+            break;
+        }
+        // AI Turn
+        for (int i = 0; i <= 9; i++)
+        {
+            BotCards[i] = i;
+        }
+        CardsCount = 9;
+        while (true)
+        {
+            OpponentCord = Random(CardsCount);
+            if (OpponentCord < 3)
+            {
+                ColumnCord = 0;
+                RowCord = OpponentCord;
+            }
+            else if (OpponentCord < 6)
+            {
+                ColumnCord = 1;
+                RowCord = OpponentCord - 3;
+            }
+            else
+            {
+                ColumnCord = 2;
+                RowCord = OpponentCord - 6;
+            }
+            if (CheckMap(Map, ColumnCord, RowCord) == true)
+            {
+                Map[ColumnCord][RowCord] = 2;
+                DrawMap[ColumnCord][RowCord] = Opponent;
+                break;
+            }
+            else
+            {
+                BotCards[OpponentCord] = BotCards[CardsCount];
+                CardsCount--;
+            }
+        }
+        cout << "The Opponent Choosed: " << ColumnCord + 1 << " and " << RowCord + 1 << '\n';
+        // Check for Opponent Win
+        if (CheckWin(Map, Player, Opponent) == true)
+        {
+            cout << '\n';
+            Draw();
+            cout << '\n';
             break;
         }
         else if (CheckForEndMap(Map) == true)
@@ -169,30 +202,30 @@ void MultiPlayerGame()
 {
     SetUp();
     Round = 0;
+    if (Round == 0 && Player == '0')
+    {
+        Draw();
+        cout << '\n';
+        cout << "Opponents Turn" << '\n';
+        while (true)
+        {
+            ColumnCord = CheckCord(3, "Enter the row coordinate (from up to down): ", "Invalid coordinate, please try again.");
+            RowCord = CheckCord(3, "Enter the column coordinate (from left to right): ", "Invalid coordinate, please try again.");
+            if (CheckMap(Map, ColumnCord, RowCord) == true)
+            {
+                Map[ColumnCord][RowCord] = 2;
+                DrawMap[ColumnCord][RowCord] = Opponent;
+                break;
+            }
+            else
+            {
+                cout << "T~his (but a scratch) coordinate is already taken, please try again \n"
+                     << '\n';
+            }
+        }
+    }
     while (true)
     {
-        if (Round == 0 && Player == '0')
-        {
-            //Opponent Play if Player is 0
-            cout << "Opponents Turn" << '\n';
-            while (true)
-            {
-                ColumnCord = CheckCord(3, "Enter the row coordinate (from up to down): ", "Invalid coordinate, please try again.");
-                RowCord = CheckCord(3, "Enter the column coordinate (from left to right): ", "Invalid coordinate, please try again.");
-                if (CheckMap(Map, ColumnCord, RowCord) == true)
-                {
-                    Map[ColumnCord][RowCord] = 2;
-                    DrawMap[ColumnCord][RowCord] = Opponent;
-                    break;
-                }
-                else
-                {
-                    cout << "T~his (but a scratch) coordinate is already taken, please try again \n"
-                         << '\n';
-                }
-            }
-            Round++;
-        }
         // Player Turn
         Draw();
         cout << '\n';
@@ -274,7 +307,7 @@ int main()
 {
     cout << "=======\n|| B ||\n|| Y ||\n||   ||\n|| T ||\n|| E ||\n|| R ||\n|| O ||\n|| R ||\n|| O ||\n======= \n\n\n\n";
     cout << "Welcome to Tic Tac Toe!\n\n";
-    if (AskChar('C', 'F', "Do you want to play against the computer or a friend? (C/F)", "Please enter a valid input."))
+    if (AskChar('c', 'f', "Do you want to play against the computer or a friend? (C/F)", "Please enter a valid input."))
     {
         cout << "You chose to play against the computer.\n\n";
         SinglePlayerGame();

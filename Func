@@ -1,12 +1,8 @@
-#ifndef LibyH
-#define LibyH
+#ifndef FuncH
+#define FuncH
 
 #include<string>
 
-namespace Bot{
-    int MiniMax(int map[3][3], int depth, bool isMaximizing, char P, char O, char dmap[3][3]);
-    void BotTurn(int map[3][3], char P, char O, char dmap[3][3]);
-};
 
 namespace Func{
     bool AskChar(char y, char n,std::string msg, std::string error);
@@ -18,7 +14,7 @@ namespace Func{
     bool CheckMap(int m[3][3],int cord1,int cord2);
     int Random(int max);
     bool CheckForEndMap(int m[3][3]);
-    char CheckWin(int m[3][3], char P, char O);
+    bool CheckWin(int m[3][3], char P, char O);
 };
 
 #endif
